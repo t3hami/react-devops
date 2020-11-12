@@ -9,14 +9,16 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                sh 'docker build -t docker.io/tehami/react .'
+                sh 'docker build -t tehami/react:1.0 .'
             }
         }
         stage('Docker Push') {
             steps {
-                sh 'echo Pushing image to docker hub...'
-                withDockerRegistry([ credentialsId: "dockerhub-creds", url: "https://registry.hub.docker.com" ]) {
-                    sh 'docker push docker.io/tehami/react'
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'dockerhub-creds',
+                                  usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'] ]){
+                    sh 'docker login -u $USERNAME -p $PASSWORD'
+                    sh 'docker push tehami/react:1.0'
+                    sh 'docker logout'
                 }
             }
         }
