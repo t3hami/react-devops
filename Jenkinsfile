@@ -9,14 +9,14 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                sh 'docker build -t tehami/react .'
+                sh 'docker build -t docker.io/tehami/react .'
             }
         }
         stage('Docker Push') {
             steps {
                 sh 'echo Pushing image to docker hub...'
                 withDockerRegistry([ credentialsId: "dockerhub-creds", url: "https://registry.hub.docker.com" ]) {
-                    sh 'docker push tehami/react'
+                    sh 'docker push docker.io/tehami/react'
                 }
             }
         }
