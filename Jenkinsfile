@@ -15,7 +15,7 @@ pipeline {
         stage('Docker Push') {
             steps {
                 sh 'echo Pushing image to docker hub...'
-                withDockerRegistry([ credentialsId: "dockerhub-creds" ]) {
+                withDockerRegistry([ credentialsId: "dockerhub-creds", url: "https://registry.hub.docker.com" ]) {
                     sh 'docker push tehami/react'
                 }
             }
