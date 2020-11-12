@@ -12,12 +12,13 @@ pipeline {
                 sh 'docker build -t tehami/react .'
             }
         }
-        /*stage('Docker Push') {
+        stage('Docker Push') {
             steps {
+                sh 'echo Pushing image to docker hub...'
                 withDockerRegistry([ credentialsId: "dockerhub-creds" ]) {
                     sh 'docker push tehami/react'
                 }
             }
-        }*/
+        }
     }
 }
